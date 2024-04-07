@@ -6,10 +6,9 @@ class Solution {
 
         for (int i = 0; i < s.length(); i++) {
             String str = String.valueOf(s.charAt(i));
-            if (!stack.isEmpty() && str.equals(")")) {
-                if (!stack.peek().equals("(")) {
+            if (str.equals(")")) {
+                if (stack.isEmpty()) 
                     return false;
-                }
                 else 
                     stack.pop();
             }
