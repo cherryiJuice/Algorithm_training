@@ -30,12 +30,12 @@ class Solution {
             if(str.equals("(") || str.equals("{") || str.equals("["))
                 stack.push(str);
             else if(!stack.isEmpty()) {
-                if (str.equals(")")) {
-                    if (stack.peek().equals("(")) stack.pop();
-                } else if (str.equals("}")) {
-                    if (stack.peek().equals("{")) stack.pop();
-                } else if (str.equals("]")) {
-                    if (stack.peek().equals("[")) stack.pop();
+                if (stack.peek().equals("(") && str.equals(")")) {
+                    stack.pop();
+                } else if (stack.peek().equals("{") && str.equals("}")) {
+                    stack.pop();
+                } else if (stack.peek().equals("[") && str.equals("]")) {
+                    stack.pop();
                 } else return false;
             }
             else return false;
