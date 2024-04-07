@@ -16,7 +16,7 @@ class Solution {
         System.out.println("tmp = " + tmp);
         for (int i = 0; i < s.length(); i++) {
             tmp = tmp.substring(1, s.length()) + tmp.substring(0, 1);
-            if (extracted(s, tmp, stack)) {
+            if (extracted(tmp, stack)) {
                 if (stack.isEmpty()) cnt++;
             }
             stack.clear();
@@ -24,8 +24,8 @@ class Solution {
         return cnt;
     }
 
-    private boolean extracted(String s, String tmp, Stack<String> stack) {
-        for (int j = 0; j < s.length(); j++) {
+    private boolean extracted(String tmp, Stack<String> stack) {
+        for (int j = 0; j < tmp.length(); j++) {
             String str = String.valueOf(tmp.charAt(j));
             if(str.equals("(") || str.equals("{") || str.equals("["))
                 stack.push(str);
