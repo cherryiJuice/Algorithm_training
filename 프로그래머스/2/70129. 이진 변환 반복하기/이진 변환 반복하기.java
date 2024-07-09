@@ -4,8 +4,7 @@ class Solution {
 		String temp = "";
 
 
-		while (true) {
-			if(temp.equals("1")) break;
+		while (!temp.equals("1")) {
 			i++;
 			temp = s.replace("0", "");
 			countZero += s.length()-temp.length();
