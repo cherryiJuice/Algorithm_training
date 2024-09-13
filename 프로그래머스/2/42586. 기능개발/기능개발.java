@@ -3,7 +3,6 @@ class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
         int[] answer = {};
         List<Integer> list = new ArrayList<>();
-        Stack<Integer> stack = new Stack<>();
         
         int days = 0;
         for(int i=0; i<progresses.length; i++) {
