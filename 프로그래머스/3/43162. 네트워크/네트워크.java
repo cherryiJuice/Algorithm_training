@@ -5,7 +5,7 @@ class Solution {
 
     public int solution(int n, int[][] computers) {
         this.computers = computers;
-        visited = new boolean[computers.length];
+        visited = new boolean[n];
 
         for (int i = 0; i < computers.length; i++){
             if (!visited[i]){
