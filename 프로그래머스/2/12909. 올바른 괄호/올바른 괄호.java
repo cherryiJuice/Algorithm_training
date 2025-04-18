@@ -2,22 +2,24 @@ import java.util.*;
 
 class Solution {
     boolean solution(String s) {
-        Stack<String> stack = new Stack<>();
+        Map<Character, Character> pair = Map.of(
+            ')', '(', 
+            ']', '[', 
+            '}', '{'
+        );
 
-        for (int i = 0; i < s.length(); i++) {
-            String str = String.valueOf(s.charAt(i));
-            if (str.equals(")")) {
-                if (stack.isEmpty()) 
+        Deque<Character> stack = new ArrayDeque<>();
+
+        for (char c : s.toCharArray()) {
+            if (pair.containsValue(c)) {
+                stack.push(c);
+            } else if (pair.containsKey(c)) {
+                if (stack.isEmpty() || stack.pop() != pair.get(c)) {
                     return false;
-                else 
-                    stack.pop();
+                }
             }
-            else stack.push(str);
-        }
-        if(!stack.isEmpty()) {
-            return false;
         }
 
-        return true;
+        return stack.isEmpty();
     }
 }
