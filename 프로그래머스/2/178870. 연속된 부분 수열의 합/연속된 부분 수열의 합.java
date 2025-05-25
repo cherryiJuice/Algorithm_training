@@ -9,13 +9,7 @@ class Solution {
         
         for(int rt=0; rt< sequence.length; rt++) {
             sum += sequence[rt];
-            if(sum == k) {
-                if(len > rt - lt) {
-                    answer[0] = lt; answer[1] = rt;
-                    len = rt - lt;
-                }
-            } 
-            else if(sum > k) {
+            if(sum >= k) {
                 while(sum > k) {
                     sum -= sequence[lt];
                     lt++;
