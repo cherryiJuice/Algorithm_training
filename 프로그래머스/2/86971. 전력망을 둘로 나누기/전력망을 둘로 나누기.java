@@ -1,51 +1,47 @@
 import java.util.*;
 
 class Solution {
+    List<List<Integer>> graph = new ArrayList<>();
+    boolean[] visited;
+
     public int solution(int n, int[][] wires) {
-        int[][] connected = new int[n][n];
-        Queue<int[]> q = new LinkedList<>();
-        int dif = Integer.MAX_VALUE;
-        
-        for(int i=0; i < wires.length; i++) {
-            int x = wires[i][0];
-            int y = wires[i][1];
-            connected[x-1][y-1] = 1;
-            connected[y-1][x-1] = 1;
+        for (int i = 0; i <= n; i++) {
+            graph.add(new ArrayList<>());
         }
-        
-        for(int i=0; i<n; i++) {
-            for(int j=0; j<n; j++) {
-                if(connected[i][j] == 1) {
-                    connected[i][j] = 0;
-                    dif = Math.min(dif, Math.abs(n -  2*bfs(i, connected)));
-                    connected[i][j] = 1;
-                }
-            }
+
+        for (int[] wire : wires) {
+            int a = wire[0];
+            int b = wire[1];
+            graph.get(a).add(b);
+            graph.get(b).add(a);
         }
-        
-        return dif;
+
+        int min = Integer.MAX_VALUE;
+
+        for (int[] wire : wires) {
+            int a = wire[0];
+            int b = wire[1];
+
+            visited = new boolean[n + 1];
+            int subtreeSize = dfs(a, b); // b를 끊은 것처럼 처리
+            int other = n - subtreeSize;
+
+            min = Math.min(min, Math.abs(subtreeSize - other));
+        }
+
+        return min;
     }
-    
-    private int bfs(int root, int[][] connected) {
-        int n = connected.length;
-        Queue<Integer> q = new LinkedList<>();
-        boolean[] visited = new boolean[n];
-        int cnt = 1;
-        
-        q.add(root);
-        visited[root] = true;
-        
-        while(!q.isEmpty()) {
-            int cur = q.remove();
-            
-            for(int i=0; i<connected.length; i++) {
-                if(connected[cur][i] == 1 && !visited[i]) {
-                    q.add(i);
-                    cnt++;
-                    visited[i] = true;
-                }
+
+    private int dfs(int current, int cut) {
+        visited[current] = true;
+        int count = 1;
+
+        for (int next : graph.get(current)) {
+            if (!visited[next] && next != cut) {
+                count += dfs(next, cut);
             }
         }
-        return cnt;
+
+        return count;
     }
 }
