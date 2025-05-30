@@ -2,42 +2,43 @@ import java.util.*;
 
 class Solution {
     public int solution(String begin, String target, String[] words) {
-        Queue<String> q = new LinkedList<>();
-        boolean[] visited = new boolean[words.length];
-        
-        q.offer(begin);
-        String cur="";
         int L = 0;
+        int len = words.length;
+        Queue<String> q = new LinkedList<>();
+        boolean[] visited = new boolean[len];
+        q.add(begin);
+        String cur = "";
         
         while(!q.isEmpty()) {
             int size = q.size();
-            for(int j=0; j<size; j++) {
+            for(int i=0; i<size; i++) {
                 String poll = q.poll();
-                if(target.equals(poll)) {
-                    return L;
-                }
-                for(int k=0; k<words.length; k++) {
-                    int trueCnt = 0;
-                    String word = words[k];
+                if(poll.equals(target)) return L;
                 
-                    if(visited[k]) continue;
-                    for(int i=0; i< word.length(); i++) {
-                        if(poll.charAt(i) == word.charAt(i)) {
+                for(int j=0; j<len; j++) {
+                    if(visited[j]) continue;
+                    
+                    int trueCnt = 0;
+                    String word = words[j];
+                    
+                    for(int k=0; k< word.length(); k++) {
+                        if(poll.charAt(k) == word.charAt(k)) {
                             trueCnt++;
                         }
                     }
-                
-                    if(trueCnt == word.length() - 1) {
-                        q.offer(word);
-                        visited[k] = true;
+                    
+                    if(trueCnt == target.length() - 1) {
+                        q.add(word);
+                        visited[j] = true;
                         cur = word;
                     }
                 }
             }
             L++;
         }
+        
         if(!cur.equals(target)) return 0;
         
-        return L;
+        return 0;
     }
 }
