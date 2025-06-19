@@ -1,20 +1,22 @@
 class Solution {
-    
     int answer = 0;
-    
-    public void dfs(int L, int sum, int[] numbers, int target) {
-        if (L == numbers.length) {
-            if(sum == target) {
-                answer++;
-            }
-        } else {
-            dfs(L+1, sum+numbers[L], numbers, target);
-            dfs(L+1, sum-numbers[L], numbers, target);
+    boolean[] visited;
+    public int solution(int[] numbers, int target) {
+        int sum = 0;
+        for(int i=0; i<numbers.length; i++) {
+            sum += numbers[i];
         }
+        
+        dfs(numbers, target, sum, 0);
+        return answer;
     }
     
-    public int solution(int[] numbers, int target) {
-        dfs(0, 0, numbers, target);
-        return answer;
+    private void dfs(int[] numbers, int target, int sum, int L) {
+        if(sum == target) {
+            answer++;
+        }
+        for(int i=L; i<numbers.length; i++) {
+            dfs(numbers, target, sum - 2*numbers[i], i+1);
+        }
     }
 }
