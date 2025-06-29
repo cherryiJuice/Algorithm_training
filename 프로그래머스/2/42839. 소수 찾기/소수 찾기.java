@@ -1,29 +1,29 @@
 import java.util.*;
 
 class Solution {
+    Set<Integer> candidates = new HashSet<>();
     boolean[] visited;
-    int answer = 0;
-    Map<Integer, Integer> map = new HashMap<>();
     
     public int solution(String numbers) {
         visited = new boolean[numbers.length()];
-        dfs(numbers.toCharArray(), "0");
-        return answer;
+        dfs(numbers.toCharArray(), "");
+        return (int) candidates.stream().filter(this::isPrime).count();
     }
     
-    private void dfs(char[] nums, String n) {
-        if(!map.containsKey(Integer.parseInt(n)) && isPrime(Integer.parseInt(n))) {
-            map.put(Integer.parseInt(n), 1);
-            answer++;
+    private void dfs(char[] nums, String cur) {
+        if(!cur.isEmpty()) {
+            int num = Integer.parseInt(cur);
+            candidates.add(num);
         }
         
         for(int i=0; i<nums.length; i++) {
             if(!visited[i]) {
                 visited[i] = true;
-                dfs(nums, n+nums[i]);
+                dfs(nums, cur + nums[i]);
                 visited[i] = false;
             }
         }
+        
     }
     
     private boolean isPrime(int n) {
