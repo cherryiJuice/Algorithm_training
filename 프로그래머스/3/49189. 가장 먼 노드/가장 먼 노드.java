@@ -1,7 +1,9 @@
 import java.util.*;
 
 class Solution {
+    
     public int solution(int n, int[][] edge) {
+        int answer = 0;
         List<List<Integer>> graph = new ArrayList<>();
         for (int i = 0; i <= n; i++) {
             graph.add(new ArrayList<>());
@@ -13,34 +15,35 @@ class Solution {
         }
 
         boolean[] visited = new boolean[n + 1];
-        Queue<int[]> queue = new LinkedList<>();
-        int maxDistance = Integer.MIN_VALUE;
-        int cnt = 0;
-
-        queue.offer(new int[] {1, 0});
+        
+        Queue<int[]> q = new LinkedList<>(); // 거리까지 같이 저장!!!
+        
+        q.offer(new int[] {1, 0});
         visited[1] = true;
-
-        while (!queue.isEmpty()) {
-            int[] poll = queue.poll();
-            int current = poll[0];
+        
+        int max = 0;
+        
+        while (!q.isEmpty()) {
+            int[] poll = q.poll();
+            int cur = poll[0];
             int distance = poll[1];
             
-            for (int next : graph.get(current)) {
+            for (int next : graph.get(cur)) {
+                int nextDistance = distance + 1;
                 if (!visited[next]) {
                     visited[next] = true;
-                    int nextDistance = distance + 1;
-                    queue.offer(new int[] {next, nextDistance});
+                    q.add(new int[]{next, nextDistance});
                     
-                    if(nextDistance == maxDistance) {
-                        cnt++;
-                    } else if(nextDistance > maxDistance) {
-                        maxDistance = nextDistance;
-                        cnt = 1;
+                    if(nextDistance > max) {
+                        max = nextDistance;
+                        answer = 1;
+                    } else if(nextDistance == max) {
+                        answer++;
                     }
                 }
             }
         }
-
-        return cnt;
+        
+        return answer;
     }
 }
